@@ -1,0 +1,91 @@
+import java.util.*;
+public class Main {
+
+
+	static class Node {
+		int data;
+		Node next;
+		Node prev;
+
+		Node(int data,Node next,Node prev) {
+			this.data=data;
+			this.next=next;
+			this.prev=prev;
+		}
+		Node(int data) {
+			this.data=data;
+			this.next=null;
+			this.prev=null;
+		}
+	}
+	public static Node convertArrtoDll(int arr[]) {
+		Node head = new Node(arr[0]);
+		Node temp=head;
+		for(int i=1; i<arr.length; i++) {
+			Node newNode=new Node(arr[i]);
+			temp.next=newNode;
+			newNode.prev=temp;
+			temp=temp.next;
+
+		}
+		return head;
+	}
+	public static void printNode(Node head) {
+		Node temp=head;
+		while(temp!=null) {
+			System.out.print(temp.data+"->");
+			temp=temp.next;
+		}
+		System.out.print("null");
+
+	}
+   public static Node insertAtbeg(Node head,int data){
+       Node newNode=new Node(data);
+       newNode.next=head;
+       head.prev=newNode;
+       head=newNode;
+       return head;
+   }
+   public static Node insertAtend(Node head,int data){
+       Node newNode=new Node(data);
+       Node temp=head;
+       while(temp.next!=null){
+           temp=temp.next;
+       }
+       temp.next=newNode;
+       newNode.prev=temp;
+       return head;
+   }
+   public static Node insertAtpos(Node head,int data,int pos){
+       Node newNode=new Node(data);
+       Node temp=head;
+      for(int i=1;i<pos;i++){
+          temp=temp.next;
+      }
+      newNode.prev=temp;
+      temp.next.prev=newNode;
+      newNode.next=temp.next;
+      temp.next=newNode;
+      return head;
+      
+   }
+	public static void main(String [] args) {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int [] arr=new int[n];
+		for(int i=0; i<n; i++) {
+			arr[i]=sc.nextInt();
+		}
+		
+		Node head=convertArrtoDll(arr);
+		printNode(head);
+		System.out.println();
+		Node insertAtend=insertAtend(head,6);
+		printNode(insertAtend);
+		System.out.println();
+		Node insertAtpos=insertAtpos(head,55,2);
+		printNode(insertAtpos);
+	
+		
+	}
+}
